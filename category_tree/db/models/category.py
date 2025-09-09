@@ -28,7 +28,7 @@ class Category(BaseTable):
     parent = relationship(
         "Category", 
         remote_side="Category.id", 
-        backref="children",
+        backref="childrens",
         foreign_keys=[parent_id]
     )  
     root = relationship(
@@ -36,6 +36,7 @@ class Category(BaseTable):
         remote_side="Category.id",
         foreign_keys=[root_id]
     )
+    products = relationship("Product", back_populates="category")
 
     __table_args__ = (
         CheckConstraint(
@@ -43,6 +44,6 @@ class Category(BaseTable):
             (parent_id IS NULL AND root_id IS NULL) OR 
             (parent_id IS NOT NULL AND root_id IS NOT NULL)
             ''',
-            name='check_parent_root_consistency'
+            name='parent_root_consistency'
         ),
     )

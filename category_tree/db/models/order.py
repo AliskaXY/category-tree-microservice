@@ -51,5 +51,5 @@ class OrderItem(BaseTable):
     )
 
     __table_args__ = (
-        CheckConstraint('amount > 0', name='check_positive_amount'),
+        CheckConstraint('amount > 0', name='positive_amount'),
     )
