@@ -13,7 +13,7 @@ class Client(BaseModel):
     dt_updated: datetime
 
     model_config = SettingsConfigDict(
-        from_attributes = True,
+        from_attributes=True,
     )
 
 
@@ -23,7 +23,7 @@ class ClientCreateRequest(BaseModel):
     address: str | None = None
 
     model_config = SettingsConfigDict(
-        extra = "forbid",
+        extra="forbid",
     )
 
 

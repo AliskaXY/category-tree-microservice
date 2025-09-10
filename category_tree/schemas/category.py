@@ -13,7 +13,7 @@ class Category(BaseModel):
     dt_updated: datetime
 
     model_config = SettingsConfigDict(
-        from_attributes = True,
+        from_attributes=True,
     )
 
 
@@ -31,7 +31,7 @@ class CategoryChilds(BaseModel):
     dt_updated: datetime
 
     model_config = SettingsConfigDict(
-        from_attributes = True,
+        from_attributes=True,
     )
 
 
