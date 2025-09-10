@@ -1,5 +1,7 @@
-list_of_routes = [
+from .ping import api_router as application_health_router
 
+list_of_routes = [
+    application_health_router
 ]
 
 __all__ = [

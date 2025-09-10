@@ -9,10 +9,12 @@ from uuid import uuid4
 import pytest
 from alembic.command import upgrade
 from alembic.config import Config
-from httpx import AsyncClient
+from httpx import AsyncClient, ASGITransport
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import create_database, database_exists, drop_database
+from sqlalchemy import create_engine, text
+from sqlalchemy.engine import make_url
 
 from tests.utils import make_alembic_config
 
@@ -55,6 +57,19 @@ def postgres() -> str:
     try:
         yield settings.database_uri
     finally:
+        url = make_url(settings.database_uri_sync)
+        default_db_url = url.set(database='postgres')
+        engine = create_engine(default_db_url)
+        
+        try:
+            with engine.connect() as conn:
+                conn.execute(
+                    text("SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = :dbname"),
+                    {'dbname': tmp_name}
+                )
+                conn.commit()
+        finally:
+            engine.dispose()
         drop_database(tmp_url)
 
 
@@ -101,8 +116,11 @@ async def client(migrated_postgres, manager: SessionManager = SessionManager()) 
     Returns a client that can be used to interact with the application.
     """
     app = get_app()
-    manager.refresh() 
-    yield AsyncClient(app=app, base_url="http://test")
+    transport = ASGITransport(app=app) 
+    manager.refresh()
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        yield client
+    await manager.close()
 
 
 @pytest.fixture

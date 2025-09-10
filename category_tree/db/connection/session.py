@@ -24,6 +24,12 @@ class SessionManager:
     def refresh(self) -> None:
         self.engine = create_async_engine(get_settings().database_uri, echo=True, future=True)
 
+    async def close(self) -> None:
+        """Close all database connections"""
+        if self.engine:
+            await self.engine.dispose()
+        self.engine = None
+
 
 async def get_session() -> AsyncSession:
     session_maker = SessionManager().get_session_maker()
