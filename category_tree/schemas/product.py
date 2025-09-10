@@ -23,13 +23,13 @@ class ProductCreateRequest(BaseModel):
     amount: int
 
     @field_validator("price")
-    def price_must_be_positive(cls, v): # pylint: disable=no-self-argument
+    def price_must_be_positive(cls, v):  # pylint: disable=no-self-argument
         if v < 0:
             raise ValueError("Price must be positive")
         return v
 
     @field_validator("amount")
-    def amount_must_be_positive(cls, v): # pylint: disable=no-self-argument
+    def amount_must_be_positive(cls, v):  # pylint: disable=no-self-argument
         if v < 0:
             raise ValueError("Amount must be positive")
         return v

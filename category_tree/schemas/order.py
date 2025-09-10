@@ -20,7 +20,7 @@ class AddOrderItemRequest(BaseModel):
     amount: int
 
     @field_validator("amount")
-    def amount_must_be_positive(cls, v): # pylint: disable=no-self-argument
+    def amount_must_be_positive(cls, v):  # pylint: disable=no-self-argument
         if v <= 0:
             raise ValueError("Amount must be positive")
         return v
