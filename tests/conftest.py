@@ -23,7 +23,11 @@ from category_tree.config import get_settings
 from category_tree.db.connection import SessionManager
 
 
-pytest_plugins = []
+pytest_plugins = [
+    "fixtures.category",
+    "fixtures.client",
+    "fixtures.product",
+]
 
 
 @pytest.fixture(scope="session")
