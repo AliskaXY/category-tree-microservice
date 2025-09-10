@@ -1,16 +1,20 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, Body, Path
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, Body, Depends, Path, Request
 from pydantic import UUID4
+from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
 from category_tree.db.connection import get_session
-from category_tree.schemas import Product as ProductSchema, ProductCreateRequest, ProductTotalSold, MessageResponse
-from category_tree.utils.product import create_product, add_category_to_product, get_top_products_last_month
+from category_tree.schemas import MessageResponse
+from category_tree.schemas import Product as ProductSchema
+from category_tree.schemas import ProductCreateRequest, ProductTotalSold
+from category_tree.utils.product import add_category_to_product, create_product, get_top_products_last_month
+
 
 api_router = APIRouter(
     prefix="/product",
     tags=["Products"],
 )
+
 
 @api_router.post(
     "",
@@ -23,6 +27,7 @@ async def create(
     session: AsyncSession = Depends(get_session),
 ):
     return await create_product(session, product)
+
 
 @api_router.post(
     "/{product_id}/category/{category_id}",
@@ -37,6 +42,7 @@ async def category_to_product(
 ):
     await add_category_to_product(session, product_id, category_id)
     return {"message": "Category added to product"}
+
 
 @api_router.get(
     "/top5_last_month",

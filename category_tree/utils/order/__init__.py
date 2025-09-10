@@ -1,5 +1,6 @@
 from .database import add_order_item
-from .exceptions import OrderError, NotEnoughInfoError, ProductNotFoundError, NotEnoughProductsError
+from .exceptions import NotEnoughInfoError, NotEnoughProductsError, OrderError, ProductNotFoundError
+
 
 __all__ = [
     "add_order_item",

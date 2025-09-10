@@ -11,20 +11,20 @@ class BaseTable(DeclarativeBase):
     id = Column(
         UUID(as_uuid=True),
         primary_key=True,
-        server_default=func.gen_random_uuid(),
+        server_default=func.gen_random_uuid(),  # pylint: disable=not-callable
         unique=True,
         doc="Unique index of element (type UUID)",
     )
     dt_created = Column(
         TIMESTAMP(timezone=True),
-        server_default=func.current_timestamp(),
+        server_default=func.current_timestamp(),  # pylint: disable=not-callable
         nullable=False,
         doc="Date and time of create (type TIMESTAMP)",
     )
     dt_updated = Column(
         TIMESTAMP(timezone=True),
-        server_default=func.current_timestamp(),
-        onupdate=func.current_timestamp(),
+        server_default=func.current_timestamp(),  # pylint: disable=not-callable
+        onupdate=func.current_timestamp(),  # pylint: disable=not-callable
         nullable=False,
         doc="Date and time of last update (type TIMESTAMP)",
     )

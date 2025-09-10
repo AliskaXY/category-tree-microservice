@@ -33,6 +33,25 @@
  make run
 ```
 
+### Тестирование
+
+Запуск тестов
+```commandline
+ make test
+```
+Запуск тестов с покрытием
+```commandline
+ make test-coverage
+```
+Запуск линтеров
+```commandline
+ make lint
+```
+Запуск форматеров
+```commandline
+ make format
+```
+
 # 1. Даталогическая схема базы данных
 
 ![Даталогическая схема базы данных](./pics/db-erd.png)

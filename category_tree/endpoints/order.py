@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Request, Depends, HTTPException, status, Body
+from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from category_tree.db.connection.session import get_session
-from category_tree.utils.order import add_order_item, ProductNotFoundError, NotEnoughProductsError, NotEnoughInfoError
-from category_tree.schemas import AddOrderItemRequest, OrderItem as OrderItemShema
+from category_tree.schemas import AddOrderItemRequest
+from category_tree.schemas import OrderItem as OrderItemShema
+from category_tree.utils.order import NotEnoughInfoError, NotEnoughProductsError, ProductNotFoundError, add_order_item
+
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 
@@ -11,6 +13,7 @@ api_router = APIRouter(
     prefix="/order",
     tags=["Orders"],
 )
+
 
 @api_router.post(
     "/add_item",

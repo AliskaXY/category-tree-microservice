@@ -1,15 +1,18 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, Body
+from fastapi import APIRouter, Body, Depends, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
 from category_tree.db.connection import get_session
-from category_tree.schemas import Category as CategoryShema, CategoryCreateRequest, CategoryChildrens
+from category_tree.schemas import Category as CategoryShema
+from category_tree.schemas import CategoryChildrens, CategoryCreateRequest
 from category_tree.utils.category import create_category, get_category_children_counts
+
 
 api_router = APIRouter(
     prefix="/category",
     tags=["Products Categories"],
 )
+
 
 @api_router.post(
     "",
@@ -22,6 +25,7 @@ async def create(
     session: AsyncSession = Depends(get_session),
 ):
     return await create_category(session, category)
+
 
 @api_router.get(
     "/children_counts",

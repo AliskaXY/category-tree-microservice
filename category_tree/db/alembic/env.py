@@ -1,14 +1,12 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-from dotenv import load_dotenv
-
 from alembic import context
+from dotenv import load_dotenv
+from sqlalchemy import engine_from_config, pool
 
 from category_tree.config import get_settings
 from category_tree.db import DeclarativeBase
-from category_tree.db.models import * # noqa  
+from category_tree.db.models import *  # noqa
 
 
 # this is the Alembic Config object, which provides
@@ -80,7 +78,7 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, 
+            connection=connection,
             target_metadata=target_metadata,
             transaction_per_migration=True,
         )

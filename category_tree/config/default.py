@@ -1,6 +1,6 @@
 from os import environ
 
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class DefaultSettings(BaseSettings):
@@ -20,7 +20,6 @@ class DefaultSettings(BaseSettings):
     POSTGRES_PASSWORD: str = environ.get("POSTGRES_PASSWORD", "simple")
     DB_CONNECT_RETRY: int = environ.get("DB_CONNECT_RETRY", 20)
     DB_POOL_SIZE: int = environ.get("DB_POOL_SIZE", 15)
-
 
     @property
     def database_settings(self) -> dict:
@@ -53,7 +52,7 @@ class DefaultSettings(BaseSettings):
             **self.database_settings,
         )
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+    )
