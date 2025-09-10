@@ -2,8 +2,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select, and_
 
 from category_tree.db.models import Client, Order, OrderItem
+from category_tree.schemas import ClientCreateRequest
 
-async def get_client_totals(db: AsyncSession):
+async def create_client(db: AsyncSession, client: ClientCreateRequest):
+    """Создание клиента"""
+    client = Client(name=client.name, email=client.email, address=client.address)
+    db.add(client)
+    await db.commit()
+    return client
+
+async def get_clients_totals(db: AsyncSession):
     """2.1. Получение информации о сумме товаров заказанных под каждого клиента"""
 
     stmt = (

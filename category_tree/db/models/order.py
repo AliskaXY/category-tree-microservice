@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, CheckConstraint
+from sqlalchemy import Column, ForeignKey, CheckConstraint, UniqueConstraint
 from sqlalchemy.dialects.postgresql import INTEGER, ENUM
 from sqlalchemy.orm import relationship
 
@@ -52,4 +52,5 @@ class OrderItem(BaseTable):
 
     __table_args__ = (
         CheckConstraint('amount > 0', name='positive_amount'),
+        UniqueConstraint("product_id", "order_id", name="unique_product_in_order"),
     )

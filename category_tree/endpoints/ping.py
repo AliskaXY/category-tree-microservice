@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
 from category_tree.db.connection import get_session
-from category_tree.schemas import PingResponse
+from category_tree.schemas import MessageResponse
 from category_tree.utils.health_check import health_check_db
 
 
@@ -15,7 +15,7 @@ api_router = APIRouter(
 
 @api_router.get(
     "/ping_application",
-    response_model=PingResponse,
+    response_model=MessageResponse,
     status_code=status.HTTP_200_OK,
 )
 async def ping_application(
@@ -26,7 +26,7 @@ async def ping_application(
 
 @api_router.get(
     "/ping_database",
-    response_model=PingResponse,
+    response_model=MessageResponse,
     status_code=status.HTTP_200_OK,
     responses={status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Database isn't working"}},
 )
