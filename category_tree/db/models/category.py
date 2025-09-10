@@ -36,7 +36,7 @@ class Category(BaseTable):
         remote_side="Category.id",
         foreign_keys=[root_id]
     )
-    products = relationship("Product", back_populates="category")
+    products = relationship("ProductCategory", back_populates="category")
 
     __table_args__ = (
         CheckConstraint(

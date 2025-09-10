@@ -1,4 +1,4 @@
-from sqlalchemy import Column, CheckConstraint, ForeignKey
+from sqlalchemy import Column, CheckConstraint, ForeignKey, UniqueConstraint
 from sqlalchemy.dialects.postgresql import TEXT, INTEGER
 from sqlalchemy.orm import relationship
 
@@ -56,3 +56,7 @@ class ProductCategory(BaseTable):
 
     product = relationship("Product", back_populates="categories")
     category = relationship("Category", back_populates="products")
+
+    __table_args__ = (
+        UniqueConstraint("product_id", "category_id", name="unique_product_category"),
+    )

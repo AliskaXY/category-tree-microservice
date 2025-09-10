@@ -1,3 +1,7 @@
-from .database import get_top_products_last_month
+from .database import create_product, add_category_to_product, get_top_products_last_month
 
-__all__ = ["get_top_products_last_month"]
+__all__ = [
+    "create_product",
+    "add_category_to_product",
+    "get_top_products_last_month",
+]
