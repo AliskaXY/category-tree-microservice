@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from pydantic import UUID4, BaseModel
+from pydantic_settings import SettingsConfigDict
 
 
 class Category(BaseModel):
@@ -11,8 +12,9 @@ class Category(BaseModel):
     dt_created: datetime
     dt_updated: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = SettingsConfigDict(
+        from_attributes = True,
+    )
 
 
 class CategoryCreateRequest(BaseModel):
@@ -28,8 +30,9 @@ class CategoryChilds(BaseModel):
     dt_created: datetime
     dt_updated: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = SettingsConfigDict(
+        from_attributes = True,
+    )
 
 
 class CategoryChildsRequest(BaseModel):

@@ -2,6 +2,7 @@ from datetime import datetime
 from enum import Enum
 
 from pydantic import UUID4, BaseModel, field_validator
+from pydantic_settings import SettingsConfigDict
 
 
 class OrderStatusEnum(str, Enum):
@@ -33,8 +34,9 @@ class OrderItem(BaseModel):
     dt_created: datetime
     dt_updated: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = SettingsConfigDict(
+        from_attributes = True,
+    )
 
 
 class Order(BaseModel):
@@ -45,5 +47,6 @@ class Order(BaseModel):
     updated_at: datetime
     items: list[OrderItem]
 
-    class Config:
-        from_attributes = True
+    model_config = SettingsConfigDict(
+        from_attributes = True,
+    )

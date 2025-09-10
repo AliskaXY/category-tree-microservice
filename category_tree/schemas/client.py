@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from pydantic import UUID4, BaseModel, EmailStr
+from pydantic_settings import SettingsConfigDict
 
 
 class Client(BaseModel):
@@ -11,8 +12,9 @@ class Client(BaseModel):
     dt_created: datetime
     dt_updated: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = SettingsConfigDict(
+        from_attributes = True,
+    )
 
 
 class ClientCreateRequest(BaseModel):
@@ -20,8 +22,9 @@ class ClientCreateRequest(BaseModel):
     email: EmailStr | None = None
     address: str | None = None
 
-    class Config:
-        extra = "forbid"
+    model_config = SettingsConfigDict(
+        extra = "forbid",
+    )
 
 
 class ClientTotal(BaseModel):

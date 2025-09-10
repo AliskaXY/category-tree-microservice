@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from pydantic import UUID4, BaseModel, field_validator
+from pydantic_settings import SettingsConfigDict
 
 
 class Product(BaseModel):
@@ -11,8 +12,9 @@ class Product(BaseModel):
     dt_created: datetime
     dt_updated: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = SettingsConfigDict(
+        from_attributes = True,
+    )
 
 
 class ProductCreateRequest(BaseModel):
