@@ -101,7 +101,7 @@ no_implicit_optional = true
 plugins = ["sqlalchemy.ext.mypy.plugin"]
 
 [tool.isort]
-known_local_folder = "category-tree"
+known_local_folder = "category_tree"
 lines_after_imports = 2
 multi_line_output = 3
 line_length = 120
