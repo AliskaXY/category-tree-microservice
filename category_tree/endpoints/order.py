@@ -17,7 +17,7 @@ api_router = APIRouter(
     # response_model=OrderItemShema,
     status_code=status.HTTP_201_CREATED,
 )
-async def create(
+async def add(
     _: Request,
     order: AddOrderItemRequest = Body(...),
     session: AsyncSession = Depends(get_session),
@@ -28,6 +28,6 @@ async def create(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     except NotEnoughProductsError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-    # except Exception as e:
-    #     raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
     return item
