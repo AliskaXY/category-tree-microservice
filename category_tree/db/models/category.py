@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, CheckConstraint
+from sqlalchemy import CheckConstraint, Column, ForeignKey
 from sqlalchemy.dialects.postgresql import TEXT
 from sqlalchemy.orm import relationship
 
@@ -25,25 +25,16 @@ class Category(BaseTable):
         index=True,
     )
 
-    parent = relationship(
-        "Category", 
-        remote_side="Category.id", 
-        backref="childrens",
-        foreign_keys=[parent_id]
-    )  
-    root = relationship(
-        "Category", 
-        remote_side="Category.id",
-        foreign_keys=[root_id]
-    )
+    parent = relationship("Category", remote_side="Category.id", backref="childrens", foreign_keys=[parent_id])
+    root = relationship("Category", remote_side="Category.id", foreign_keys=[root_id])
     products = relationship("ProductCategory", back_populates="category")
 
     __table_args__ = (
         CheckConstraint(
-            '''
+            """
             (parent_id IS NULL AND root_id IS NULL) OR 
             (parent_id IS NOT NULL AND root_id IS NOT NULL)
-            ''',
-            name='parent_root_consistency'
+            """,
+            name="parent_root_consistency",
         ),
     )

@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from pydantic import BaseModel, UUID4, EmailStr
+from pydantic import UUID4, BaseModel, EmailStr
+
 
 class Client(BaseModel):
     id: UUID4
@@ -13,6 +14,7 @@ class Client(BaseModel):
     class Config:
         orm_mode = True
 
+
 class ClientCreateRequest(BaseModel):
     name: str
     email: EmailStr | None = None
@@ -20,6 +22,7 @@ class ClientCreateRequest(BaseModel):
 
     class Config:
         extra = "forbid"
+
 
 class ClientTotal(BaseModel):
     name: str

@@ -1,6 +1,8 @@
-from pydantic import BaseModel, UUID4, field_validator
-from enum import Enum
 from datetime import datetime
+from enum import Enum
+
+from pydantic import UUID4, BaseModel, field_validator
+
 
 class OrderStatusEnum(str, Enum):
     forming = "forming"
@@ -9,17 +11,19 @@ class OrderStatusEnum(str, Enum):
     done = "done"
     cancelled = "cancelled"
 
+
 class AddOrderItemRequest(BaseModel):
     order_id: UUID4 | None = None
     client_id: UUID4 | None = None
     product_id: UUID4
     amount: int
 
-    @field_validator('amount')
+    @field_validator("amount")
     def amount_must_be_positive(cls, v):
         if v <= 0:
-            raise ValueError('Amount must be positive')
+            raise ValueError("Amount must be positive")
         return v
+
 
 class OrderItem(BaseModel):
     id: UUID4
@@ -31,6 +35,7 @@ class OrderItem(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class Order(BaseModel):
     id: UUID4

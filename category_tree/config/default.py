@@ -21,7 +21,6 @@ class DefaultSettings(BaseSettings):
     DB_CONNECT_RETRY: int = environ.get("DB_CONNECT_RETRY", 20)
     DB_POOL_SIZE: int = environ.get("DB_POOL_SIZE", 15)
 
-
     @property
     def database_settings(self) -> dict:
         """
@@ -56,4 +55,3 @@ class DefaultSettings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
-

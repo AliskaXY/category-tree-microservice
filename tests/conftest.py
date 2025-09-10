@@ -9,12 +9,12 @@ from uuid import uuid4
 import pytest
 from alembic.command import upgrade
 from alembic.config import Config
-from httpx import AsyncClient, ASGITransport
+from httpx import ASGITransport, AsyncClient
+from sqlalchemy import create_engine, text
+from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import create_database, database_exists, drop_database
-from sqlalchemy import create_engine, text
-from sqlalchemy.engine import make_url
 
 from tests.utils import make_alembic_config
 
@@ -23,9 +23,7 @@ from category_tree.config import get_settings
 from category_tree.db.connection import SessionManager
 
 
-pytest_plugins = [
-
-]
+pytest_plugins = []
 
 
 @pytest.fixture(scope="session")
@@ -58,14 +56,14 @@ def postgres() -> str:
         yield settings.database_uri
     finally:
         url = make_url(settings.database_uri_sync)
-        default_db_url = url.set(database='postgres')
+        default_db_url = url.set(database="postgres")
         engine = create_engine(default_db_url)
-        
+
         try:
             with engine.connect() as conn:
                 conn.execute(
                     text("SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = :dbname"),
-                    {'dbname': tmp_name}
+                    {"dbname": tmp_name},
                 )
                 conn.commit()
         finally:
@@ -116,7 +114,7 @@ async def client(migrated_postgres, manager: SessionManager = SessionManager()) 
     Returns a client that can be used to interact with the application.
     """
     app = get_app()
-    transport = ASGITransport(app=app) 
+    transport = ASGITransport(app=app)
     manager.refresh()
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         yield client

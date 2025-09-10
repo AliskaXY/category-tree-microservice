@@ -4,6 +4,7 @@ from .order import api_router as order_router
 from .ping import api_router as application_health_router
 from .product import api_router as product_router
 
+
 list_of_routes = [
     category_router,
     client_router,

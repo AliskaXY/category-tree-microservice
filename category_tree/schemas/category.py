@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from pydantic import BaseModel, UUID4
+from pydantic import UUID4, BaseModel
+
 
 class Category(BaseModel):
     id: UUID4
@@ -13,9 +14,11 @@ class Category(BaseModel):
     class Config:
         orm_mode = True
 
+
 class CategoryCreateRequest(BaseModel):
     name: str
     parent_id: UUID4 | None = None
+
 
 class CategoryChilds(BaseModel):
     id: UUID4
@@ -28,11 +31,12 @@ class CategoryChilds(BaseModel):
     class Config:
         orm_mode = True
 
+
 class CategoryChildsRequest(BaseModel):
     category_id: UUID4
+
 
 class CategoryChildrens(BaseModel):
     id: UUID4
     name: str
     children_count: int = 0
-

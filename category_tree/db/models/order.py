@@ -1,5 +1,5 @@
-from sqlalchemy import Column, ForeignKey, CheckConstraint, UniqueConstraint
-from sqlalchemy.dialects.postgresql import INTEGER, ENUM
+from sqlalchemy import CheckConstraint, Column, ForeignKey, UniqueConstraint
+from sqlalchemy.dialects.postgresql import ENUM, INTEGER
 from sqlalchemy.orm import relationship
 
 from .base import BaseTable
@@ -30,6 +30,7 @@ class Order(BaseTable):
     client = relationship("Client", back_populates="orders")
     items = relationship("OrderItem", backref="order")
 
+
 class OrderItem(BaseTable):
     __tablename__ = "order_item"
 
@@ -51,6 +52,6 @@ class OrderItem(BaseTable):
     )
 
     __table_args__ = (
-        CheckConstraint('amount > 0', name='positive_amount'),
+        CheckConstraint("amount > 0", name="positive_amount"),
         UniqueConstraint("product_id", "order_id", name="unique_product_in_order"),
     )

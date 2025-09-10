@@ -1,6 +1,6 @@
-from .category import Category, CategoryCreateRequest, CategoryChildrens
+from .category import Category, CategoryChildrens, CategoryCreateRequest
 from .client import Client, ClientCreateRequest, ClientTotal
-from .order import AddOrderItemRequest, OrderStatusEnum, OrderItem, Order
+from .order import AddOrderItemRequest, Order, OrderItem, OrderStatusEnum
 from .ping import MessageResponse
 from .product import Product, ProductCreateRequest, ProductTotalSold
 
