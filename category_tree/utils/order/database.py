@@ -45,6 +45,7 @@ async def add_order_item(db: AsyncSession, item: AddOrderItemRequest):
         product.amount -= item.amount
         db.add(product)
         await db.commit()
+        await db.refresh(order_item)
         return order_item
     
     except Exception as e:

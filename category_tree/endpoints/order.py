@@ -14,7 +14,7 @@ api_router = APIRouter(
 
 @api_router.post(
     "/add_item",
-    # response_model=OrderItemShema,
+    response_model=OrderItemShema,
     status_code=status.HTTP_201_CREATED,
 )
 async def add(
