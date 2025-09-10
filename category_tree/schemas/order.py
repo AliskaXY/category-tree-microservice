@@ -6,11 +6,11 @@ from pydantic_settings import SettingsConfigDict
 
 
 class OrderStatusEnum(str, Enum):
-    forming = "forming"
-    paid = "paid"
-    delivering = "delivering"
-    done = "done"
-    cancelled = "cancelled"
+    FORMING = "forming"
+    PAID = "paid"
+    DELIVERING = "delivering"
+    DONE = "done"
+    CANCELLED = "cancelled"
 
 
 class AddOrderItemRequest(BaseModel):
@@ -20,7 +20,7 @@ class AddOrderItemRequest(BaseModel):
     amount: int
 
     @field_validator("amount")
-    def amount_must_be_positive(cls, v):
+    def amount_must_be_positive(cls, v): # pylint: disable=no-self-argument
         if v <= 0:
             raise ValueError("Amount must be positive")
         return v

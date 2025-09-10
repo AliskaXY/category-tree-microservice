@@ -23,7 +23,7 @@ async def add_order_item(db: AsyncSession, item: AddOrderItemRequest):
         if not order:
             if not item.client_id:
                 raise NotEnoughInfoError("Не достаточно информации для создания заказа")
-            order = Order(client_id=item.client_id, status=OrderStatusEnum.forming)
+            order = Order(client_id=item.client_id, status=OrderStatusEnum.FORMING)
             db.add(order)
             await db.flush()
             order_item = None

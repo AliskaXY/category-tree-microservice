@@ -46,7 +46,7 @@ def postgres() -> str:
 
     tmp_name = ".".join([uuid4().hex, "pytest"])
     settings.POSTGRES_DB = tmp_name
-    environ["POSTGRES_DB"] = tmp_name
+    environ["POSTGRES_DB"] = tmp_name # pylint: disable=invalid-name
 
     tmp_url = settings.database_uri_sync
     if not database_exists(tmp_url):
